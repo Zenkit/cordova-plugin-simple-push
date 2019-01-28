@@ -1,4 +1,4 @@
-package com.adobe.phonegap.push;
+package com.zenkit.cordova.push;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -90,7 +90,7 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
     if (extras != null && isAvailableSender(from)) {
       Context applicationContext = getApplicationContext();
 
-      SharedPreferences prefs = applicationContext.getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH,
+      SharedPreferences prefs = applicationContext.getSharedPreferences(PushPlugin.COM_ZENKIT_CORDOVA_PUSH,
           Context.MODE_PRIVATE);
       boolean forceShow = prefs.getBoolean(FORCE_SHOW, false);
       boolean clearBadge = prefs.getBoolean(CLEAR_BADGE, false);
@@ -420,7 +420,7 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
         .setTicker(fromHtml(extras.getString(TITLE))).setContentIntent(contentIntent).setDeleteIntent(deleteIntent)
         .setAutoCancel(true);
 
-    SharedPreferences prefs = context.getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH, Context.MODE_PRIVATE);
+    SharedPreferences prefs = context.getSharedPreferences(PushPlugin.COM_ZENKIT_CORDOVA_PUSH, Context.MODE_PRIVATE);
     String localIcon = prefs.getString(ICON, null);
     String localIconColor = prefs.getString(ICON_COLOR, null);
     boolean soundOption = prefs.getBoolean(SOUND, true);
@@ -939,7 +939,7 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
   }
 
   private boolean isAvailableSender(String from) {
-    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH,
+    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(PushPlugin.COM_ZENKIT_CORDOVA_PUSH,
         Context.MODE_PRIVATE);
     String savedSenderID = sharedPref.getString(SENDER_ID, "");
 

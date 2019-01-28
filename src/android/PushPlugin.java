@@ -1,4 +1,4 @@
-package com.adobe.phonegap.push;
+package com.zenkit.cordova.push;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -157,7 +157,7 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
       }
       try {
         options.put(CHANNEL_ID, DEFAULT_CHANNEL_ID);
-        options.putOpt(CHANNEL_DESCRIPTION, "PhoneGap PushPlugin");
+        options.putOpt(CHANNEL_DESCRIPTION, "Cordova PushPlugin");
         createChannel(options);
       } catch (JSONException e) {
         Log.e(LOG_TAG, "execute: Got JSON Exception " + e.getMessage());
@@ -177,7 +177,7 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
           JSONObject jo = null;
 
           Log.v(LOG_TAG, "execute: data=" + data.toString());
-          SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(COM_ADOBE_PHONEGAP_PUSH,
+          SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(COM_ZENKIT_CORDOVA_PUSH,
               Context.MODE_PRIVATE);
           String token = null;
           String senderID = null;
@@ -280,7 +280,7 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
       cordova.getThreadPool().execute(new Runnable() {
         public void run() {
           try {
-            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(COM_ADOBE_PHONEGAP_PUSH,
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(COM_ZENKIT_CORDOVA_PUSH,
                 Context.MODE_PRIVATE);
             JSONArray topics = data.optJSONArray(0);
             if (topics != null && !"".equals(registration_id)) {
@@ -507,7 +507,7 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
     super.onPause(multitasking);
     gForeground = false;
 
-    SharedPreferences prefs = getApplicationContext().getSharedPreferences(COM_ADOBE_PHONEGAP_PUSH,
+    SharedPreferences prefs = getApplicationContext().getSharedPreferences(COM_ZENKIT_CORDOVA_PUSH,
         Context.MODE_PRIVATE);
     if (prefs.getBoolean(CLEAR_NOTIFICATIONS, true)) {
       clearAllNotifications();

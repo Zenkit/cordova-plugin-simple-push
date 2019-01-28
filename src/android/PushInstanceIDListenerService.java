@@ -1,4 +1,4 @@
-package com.adobe.phonegap.push;
+package com.zenkit.cordova.push;
 
 import android.content.Intent;
 import android.content.Context;

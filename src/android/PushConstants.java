@@ -1,7 +1,7 @@
-package com.adobe.phonegap.push;
+package com.zenkit.cordova.push;
 
 public interface PushConstants {
-  public static final String COM_ADOBE_PHONEGAP_PUSH = "com.adobe.phonegap.push";
+  public static final String COM_ZENKIT_CORDOVA_PUSH = "com.zenkit.cordova.push";
   public static final String REGISTRATION_ID = "registrationId";
   public static final String REGISTRATION_TYPE = "registrationType";
   public static final String FOREGROUND = "foreground";

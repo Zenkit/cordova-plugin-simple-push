@@ -1,9 +1,9 @@
-// Type definitions for phonegap-plugin-push
-// Project: https://github.com/phonegap/phonegap-plugin-push
+// Type definitions for cordova-plugin-simple-push
+// Project: https://github.com/zenkit/cordova-plugin-simple-push
 // Definitions by: Frederico Galvão <https://github.com/fredgalvao>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare namespace PhonegapPluginPush {
+declare namespace CordovaPluginPush {
 	type EventResponse = RegistrationEventResponse | NotificationEventResponse | Error
 
 	interface PushNotification {
@@ -321,6 +321,6 @@ declare namespace PhonegapPluginPush {
 }
 
 interface Window {
-	PushNotification: PhonegapPluginPush.PushNotificationStatic
+	PushNotification: CordovaPluginPush.PushNotificationStatic
 }
-declare var PushNotification: PhonegapPluginPush.PushNotificationStatic;
+declare var PushNotification: CordovaPluginPush.PushNotificationStatic;
