@@ -2,7 +2,7 @@
   "name": "cordova-plugin-simple-push",
   "description": "Register and receive push notifications.",
   "types": "./types/index.d.ts",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "homepage": "http://github.com/zenkit/cordova-plugin-simple-push#readme",
   "repository": {
     "type": "git",
