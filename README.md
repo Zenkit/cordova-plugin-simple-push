@@ -10,7 +10,7 @@ It is limited to `Android` and `iOS` and also removed the `FCM` support for `ìO
 Install with Cordova CLI:
 
 ```sh
-cordova plugin add https://github.com/zenkit/cordova-plugin-simple-push#v3.0.1
+cordova plugin add https://github.com/zenkit/cordova-plugin-simple-push#v3.1.0
 ```
 
 **For documentation refer to `phonegap-plugin-push`:**
