@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.media.AudioAttributes;
 import android.net.Uri;
@@ -146,27 +148,43 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   @TargetApi(26)
   private void createDefaultNotificationChannelIfNeeded(JSONObject options) {
-    String id;
     // only call on Android O and above
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      final NotificationManager notificationManager = (NotificationManager) cordova.getActivity()
-          .getSystemService(Context.NOTIFICATION_SERVICE);
-      List<NotificationChannel> channels = notificationManager.getNotificationChannels();
-
-      for (int i = 0; i < channels.size(); i++) {
-        id = channels.get(i).getId();
-        if (id.equals(DEFAULT_CHANNEL_ID)) {
-          return;
-        }
-      }
-      try {
-        options.put(CHANNEL_ID, DEFAULT_CHANNEL_ID);
-        options.putOpt(CHANNEL_DESCRIPTION, "Cordova PushPlugin");
-        createChannel(options);
-      } catch (JSONException e) {
-        Log.e(LOG_TAG, "execute: Got JSON Exception " + e.getMessage());
-      }
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      return;
     }
+
+    String description = getAppName();
+    final NotificationManager notificationManager = (NotificationManager) cordova.getActivity()
+      .getSystemService(Context.NOTIFICATION_SERVICE);
+    List<NotificationChannel> channels = notificationManager.getNotificationChannels();
+
+    for (NotificationChannel channel : channels) {
+      String id = channel.getId();
+      if (!id.equals(DEFAULT_CHANNEL_ID)) {
+        continue;
+      }
+
+      // Found default channel, update the name if needed and return.
+      if (!description.equals(channel.getName())) {
+        channel.setName(description);
+      }
+      return;
+    }
+
+    try {
+      options.put(CHANNEL_ID, DEFAULT_CHANNEL_ID);
+      options.putOpt(CHANNEL_DESCRIPTION, description);
+      createChannel(options);
+    } catch (JSONException e) {
+      Log.e(LOG_TAG, "execute: Got JSON Exception " + e.getMessage());
+    }
+  }
+
+  private String getAppName() {
+    Activity activity = cordova.getActivity();
+    PackageManager manager = activity.getPackageManager();
+    ApplicationInfo app = activity.getApplicationInfo();
+    return (String) manager.getApplicationLabel(app);
   }
 
   @Override
@@ -539,9 +557,8 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   private void clearNotification(int id) {
     final NotificationManager notificationManager = (NotificationManager) cordova.getActivity()
-        .getSystemService(Context.NOTIFICATION_SERVICE);
-    String appName = (String) this.cordova.getActivity().getPackageManager()
-        .getApplicationLabel(this.cordova.getActivity().getApplicationInfo());
+      .getSystemService(Context.NOTIFICATION_SERVICE);
+    String appName = getAppName();
     notificationManager.cancel(appName, id);
   }
 
